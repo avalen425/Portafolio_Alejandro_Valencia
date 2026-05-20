@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alejandro Valencia — AI Systems Architect</title>
+  <meta name="description" content="AI Systems Architect · Fintech & Operations Leader · Enterprise SaaS Builder. Ciudad de Panamá." />
+  <meta property="og:title" content="Alejandro Valencia — AI Systems Architect" />
+  <meta property="og:description" content="La inteligencia artificial no asiste tareas: ejecuta decisiones." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/alejandro-valencia.png" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23F6F4EF'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-weight='400' fill='%230A1F44' text-anchor='middle' letter-spacing='-1'%3EAV%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var dark = saved ? saved === 'dark'
+          : window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">AV</a>
+      <div class="nav-links">
+        <a href="#capabilities">Capacidades</a>
+        <a href="#work">Trabajo</a>
+        <a href="#approach">Enfoque</a>
+        <a href="#writing">Notas</a>
+        <a href="#contact">Contacto</a>
+      </div>
+      <div class="nav-right">
+        <span class="nav-lang">ES / EN</span>
+        <button class="nav-theme" id="theme-btn" aria-label="Cambiar tema">
+          <span class="icon-moon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+              <path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5z"/>
+            </svg>
+          </span>
+          <span class="icon-sun" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+              <circle cx="8" cy="8" r="3"/><line x1="8" y1="1.5" x2="8" y2="3"/>
+              <line x1="8" y1="13" x2="8" y2="14.5"/><line x1="1.5" y1="8" x2="3" y2="8"/>
+              <line x1="13" y1="8" x2="14.5" y2="8"/><line x1="3.5" y1="3.5" x2="4.5" y2="4.5"/>
+              <line x1="11.5" y1="11.5" x2="12.5" y2="12.5"/><line x1="12.5" y1="3.5" x2="11.5" y2="4.5"/>
+              <line x1="4.5" y1="11.5" x2="3.5" y2="12.5"/>
+            </svg>
+          </span>
+        </button>
+        <button class="nav-menu-btn" id="menu-btn" aria-label="Menú" aria-expanded="false">
+          <span class="icon-menu" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+              <line x1="3" y1="6" x2="17" y2="6"/><line x1="3" y1="10" x2="17" y2="10"/><line x1="3" y1="14" x2="17" y2="14"/>
+            </svg>
+          </span>
+          <span class="icon-close" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+              <line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="#capabilities">Capacidades</a>
+    <a href="#work">Trabajo</a>
+    <a href="#approach">Enfoque</a>
+    <a href="#writing">Notas</a>
+    <a href="#contact">Contacto</a>
+  </div>
+
+  <main>
+    <!-- HERO -->
+    <section id="hero">
+      <div class="hero-grain" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <p class="hero-pretitle">Strategic Tech Leader · Fintech Architect · Venture Capital Analyst</p>
+        <h1 class="hero-headline">
+          <span class="hl1"><span class="hl-dim">Ingeniería de</span> <span class="hl-em">alto rendimiento.</span></span>
+          <span class="hl2"><span class="hl-dim">Liderazgo</span> <span class="hl-em">sistémico.</span></span>
+          <span class="hl3"><span class="hl-dim">Tesis de</span> <span class="hl-em">capital.</span></span>
+        </h1>
+        <div class="hero-rule" aria-hidden="true"></div>
+        <p class="hero-sub">
+          Orquestando la intersección entre ingeniería de software de alto rendimiento, liderazgo sistémico y tesis de inversión tecnológica.
+        </p>
+        <div class="hero-ctas">
+          <a href="#work" class="btn-p">Ver casos de estudio
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h9M8 3l3.5 3.5L8 10"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/alejandro-valencia-49b0b7206/" target="_blank" rel="noopener noreferrer" class="btn-s">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg>
+            Conectar en LinkedIn
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAPABILITIES -->
+    <section id="capabilities">
+      <div class="section-wrap">
+        <div class="fi section-head">
+          <span class="section-num">—</span>
+          <span class="section-title">Capacidades núcleo</span>
+        </div>
+        <div class="cap-list">
+          <div class="fi cap-row">
+            <div class="cap-n">01</div>
+            <div class="cap-name">Arquitectura de Sistemas Inteligentes</div>
+            <div>
+              <p class="cap-desc">Diseño de plataformas SaaS multi-tenant, orquestación multi-agente y arquitectura IA-ready para entornos de producción exigentes.</p>
+              <div class="cap-tags">
+                <span class="cap-tag">SaaS multi-tenant</span>
+                <span class="cap-tag">Orquestación multi-agente</span>
+                <span class="cap-tag">Memory management</span>
+                <span class="cap-tag">Infraestructura IA-ready</span>
+              </div>
+            </div>
+          </div>
+          <div class="fi cap-row" style="transition-delay:0.07s">
+            <div class="cap-n">02</div>
+            <div class="cap-name">Operaciones Financieras End-to-End</div>
+            <div>
+              <p class="cap-desc">Originación, cobranza, BI, riesgo crediticio, cumplimiento regulatorio y control presupuestario a escala nacional.</p>
+              <div class="cap-tags">
+                <span class="cap-tag">Originación &amp; cobranza</span>
+                <span class="cap-tag">Riesgo crediticio</span>
+                <span class="cap-tag">Cumplimiento</span>
+                <span class="cap-tag">Control presupuestario</span>
+              </div>
+            </div>
+          </div>
+          <div class="fi cap-row" style="transition-delay:0.14s">
+            <div class="cap-n">03</div>
+            <div class="cap-name">Producto, Growth &amp; Monetización</div>
+            <div>
+              <p class="cap-desc">Productos fintech desde cero: CRM propietarios, referidos, loyalty, wallets y trazabilidad 360° del funnel.</p>
+              <div class="cap-tags">
+                <span class="cap-tag">Productos fintech</span>
+                <span class="cap-tag">CRM propietario</span>
+                <span class="cap-tag">Referidos &amp; loyalty</span>
+                <span class="cap-tag">Wallets</span>
+              </div>
+            </div>
+          </div>
+          <div class="fi cap-row" style="transition-delay:0.21s">
+            <div class="cap-n">04</div>
+            <div class="cap-name">Data, BI &amp; Decisión Ejecutiva</div>
+            <div>
+              <p class="cap-desc">Dashboards ejecutivos, simuladores de negocio y modelos financieros para decisión data-driven en tiempo real.</p>
+              <div class="cap-tags">
+                <span class="cap-tag">Dashboards ejecutivos</span>
+                <span class="cap-tag">Simuladores</span>
+                <span class="cap-tag">Modelado financiero</span>
+                <span class="cap-tag">Tiempo real</span>
+              </div>
+            </div>
+          </div>
+          <div class="fi cap-row" style="transition-delay:0.28s">
+            <div class="cap-n">05</div>
+            <div class="cap-name">Ingeniería &amp; Ejecución Técnica</div>
+            <div>
+              <p class="cap-desc">Full-stack moderno con seguridad avanzada, CI/CD multi-cloud y arquitecturas escalables listas para producción.</p>
+              <div class="cap-tags">
+                <span class="cap-tag">React · Next.js · Node</span>
+                <span class="cap-tag">Supabase · Firebase</span>
+                <span class="cap-tag">RBAC · RLS · 2FA</span>
+                <span class="cap-tag">CI/CD multi-cloud</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORMATION -->
+    <section id="formation">
+      <div class="section-wrap">
+        <div class="fi section-head">
+          <span class="section-num">—</span>
+          <span class="section-title">Formación &amp; Credenciales</span>
+        </div>
+        <div class="formation-categories">
+
+          <div class="fi formation-cat-block">
+            <div class="formation-cat-label">
+              Liderazgo Estratégico y Capital
+              <span class="priority-badge">PRIORITY</span>
+            </div>
+            <div class="formation-cards cols-2">
+              <div class="fcard">
+                <div class="fcard-top">
+                  <span class="pulse-dot"></span>
+                  <span class="fcard-status active">En curso</span>
+                </div>
+                <div class="fcard-title">McKinsey Forward</div>
+                <div class="fcard-entity">McKinsey &amp; Company</div>
+                <p class="fcard-focus">Liderazgo en entornos digitales, pensamiento sistémico y resolución de problemas complejos.</p>
+                <div class="fcard-hover">
+                  <div class="fcard-hover-title">Enfoque</div>
+                  <div class="fcard-skill">— Liderazgo en entornos digitales, pensamiento sistémico y resolución de problemas complejos.</div>
+                </div>
+              </div>
+              <div class="fcard">
+                <div class="fcard-top">
+                  <span class="pulse-dot gold"></span>
+                  <span class="fcard-status gold">En curso</span>
+                </div>
+                <div class="fcard-title">Agente de Inversión (Venture Capital)</div>
+                <div class="fcard-entity">Lanchmon &amp; Ruta N</div>
+                <p class="fcard-focus">Evaluación de Startups, tesis de inversión, Due Diligence y Cap Tables.</p>
+                <div class="fcard-hover">
+                  <div class="fcard-hover-title">Enfoque</div>
+                  <div class="fcard-skill">— Evaluación de Startups, tesis de inversión, Due Diligence y Cap Tables.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fi formation-cat-block" style="transition-delay:0.08s">
+            <div class="formation-cat-label">
+              Ingeniería &amp; Arquitectura
+            </div>
+            <div class="formation-cards">
+              <div class="fcard">
+                <div class="fcard-top">
+                  <span class="pulse-dot"></span>
+                  <span class="fcard-status active">En curso</span>
+                </div>
+                <div class="fcard-title">Ingeniería en Sistemas Computacionales</div>
+                <div class="fcard-entity">Univ. Interamericana de Panamá</div>
+                <div class="fcard-hover">
+                  <div class="fcard-hover-title">Habilidades clave</div>
+                  <div class="fcard-skill">— Diseño de sistemas complejos</div>
+                  <div class="fcard-skill">— Arquitectura de Software</div>
+                  <div class="fcard-skill">— SDLC</div>
+                </div>
+              </div>
+              <div class="fcard">
+                <div class="fcard-top">
+                  <span class="fcard-status">2024</span>
+                </div>
+                <div class="fcard-title">Bootcamp Integrador Software</div>
+                <div class="fcard-entity">Universidad de Antioquia</div>
+                <div class="fcard-hover">
+                  <div class="fcard-hover-title">Habilidades clave</div>
+                  <div class="fcard-skill">— Java Full Stack</div>
+                  <div class="fcard-skill">— Bases de Datos</div>
+                </div>
+              </div>
+              <div class="fcard">
+                <div class="fcard-top">
+                  <span class="fcard-status">2024</span>
+                </div>
+                <div class="fcard-title">Software Engineering Essentials</div>
+                <div class="fcard-entity">IBM</div>
+                <div class="fcard-id">ID: b166-83cf88f36b42</div>
+                <div class="fcard-hover">
+                  <div class="fcard-hover-title">Habilidades clave</div>
+                  <div class="fcard-skill">— Software Engineering</div>
+                  <div class="fcard-skill">— Development Practices</div>
+                  <div class="fcard-id">ID: b166-83cf88f36b42</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fi formation-cat-block" style="transition-delay:0.16s">
+            <div class="formation-cat-label">
+              Management &amp; Fintech
+            </div>
+            <div class="formation-cards">
+              <div class="fcard">
+                <div class="fcard-top">
+                  <span class="fcard-status">Certificado</span>
+                </div>
+                <div class="fcard-title">Google Project Management Specialization</div>
+                <div class="fcard-entity">Google</div>
+                <div class="fcard-id">ID: W7CKZTYHLNBR</div>
+                <div class="fcard-hover">
+                  <div class="fcard-hover-title">Habilidades clave</div>
+                  <div class="fcard-skill">— Gestión de riesgos</div>
+                  <div class="fcard-skill">— Scoping</div>
+                  <div class="fcard-skill">— Presupuestos</div>
+                  <div class="fcard-id">ID: W7CKZTYHLNBR</div>
+                </div>
+              </div>
+              <div class="fcard">
+                <div class="fcard-top">
+                  <span class="fcard-status">Certificado</span>
+                </div>
+                <div class="fcard-title">Fintech Product Management</div>
+                <div class="fcard-entity">Udemy / Univ. of Michigan</div>
+                <div class="fcard-hover">
+                  <div class="fcard-hover-title">Habilidades clave</div>
+                  <div class="fcard-skill">— DeFi</div>
+                  <div class="fcard-skill">— BaaS</div>
+                  <div class="fcard-skill">— Payment Technologies</div>
+                  <div class="fcard-skill">— Fraude</div>
+                </div>
+              </div>
+              <div class="fcard">
+                <div class="fcard-top">
+                  <span class="fcard-status">Certificado</span>
+                </div>
+                <div class="fcard-title">Estrategia CRM &amp; Growth</div>
+                <div class="fcard-entity">HubSpot</div>
+                <div class="fcard-hover">
+                  <div class="fcard-hover-title">Habilidades clave</div>
+                  <div class="fcard-skill">— Sales Hub</div>
+                  <div class="fcard-skill">— Service Hub</div>
+                  <div class="fcard-skill">— Automatización de Negocios</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK -->
+    <section id="work">
+      <div class="section-wrap">
+        <div class="fi section-head">
+          <span class="section-num">—</span>
+          <span class="section-title">Trabajo seleccionado</span>
+        </div>
+        <div class="work-list">
+
+          <div class="fi">
+            <article class="work-row">
+              <div class="work-left">
+                <div class="work-n">01</div>
+                <div class="work-cat">PRODUCT · SAAS · VC TECH</div>
+                <div class="work-yr">2025</div>
+              </div>
+              <div>
+                <h3 class="work-title">VC Ops para LatAm — Plataforma SaaS de Operaciones de Venture Capital</h3>
+                <p class="work-desc">Product Owner de plataforma SaaS de VC Ops para LatAm. Roadmap de 111 ítems, despliegue continuo y metodología ágil aplicada a FinTech / VC Tech para operar el ciclo completo de deal-flow, due diligence y portfolio management.</p>
+                <div class="work-metric">◆ Roadmap de 111 ítems · Continuous Deployment</div>
+              </div>
+              <div class="work-right">
+                <div class="chip-row">
+                  <span class="chip">Product Ownership</span>
+                  <span class="chip">Agile</span>
+                  <span class="chip">SaaS</span>
+                  <span class="chip">VC Tech</span>
+                  <span class="chip">Next.js</span>
+                  <span class="chip">Supabase</span>
+                </div>
+                <a href="#" class="work-link">Leer caso completo
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h9M8 3l3.5 3.5L8 10"/></svg>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="fi" style="transition-delay:0.06s">
+            <article class="work-row">
+              <div class="work-left">
+                <div class="work-n">02</div>
+                <div class="work-cat">MULTI-AGENT AI</div>
+                <div class="work-yr">2025</div>
+              </div>
+              <div>
+                <h3 class="work-title">Sistema de Gestión Multi-Agente con IA</h3>
+                <p class="work-desc">Plataforma con 14+ agentes especializados y Command Center ejecutivo para decisiones asistidas y automatización empresarial en tiempo real.</p>
+                <div class="work-metric">◆ Decisiones ejecutivas automatizadas en tiempo real</div>
+              </div>
+              <div class="work-right">
+                <div class="chip-row">
+                  <span class="chip">Multi-agent</span>
+                  <span class="chip">LLM orchestration</span>
+                  <span class="chip">React</span>
+                  <span class="chip">Node.js</span>
+                  <span class="chip">Supabase</span>
+                </div>
+                <a href="#" class="work-link">Leer caso completo
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h9M8 3l3.5 3.5L8 10"/></svg>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="fi" style="transition-delay:0.12s">
+            <article class="work-row">
+              <div class="work-left">
+                <div class="work-n">03</div>
+                <div class="work-cat">ENTERPRISE SAAS</div>
+                <div class="work-yr">2024–2025</div>
+              </div>
+              <div>
+                <h3 class="work-title">TallyUp — SaaS de Cobranza Empresarial</h3>
+                <p class="work-desc">Plataforma multi-tenant con integración de pagos (Stripe), comunicaciones automatizadas (WhatsApp), seguridad avanzada y trazabilidad completa de operaciones.</p>
+                <div class="work-metric">◆ Multi-tenant production-ready</div>
+              </div>
+              <div class="work-right">
+                <div class="chip-row">
+                  <span class="chip">Next.js</span>
+                  <span class="chip">Stripe</span>
+                  <span class="chip">WhatsApp API</span>
+                  <span class="chip">Supabase</span>
+                  <span class="chip">RBAC</span>
+                </div>
+                <a href="#" class="work-link">Leer caso completo
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h9M8 3l3.5 3.5L8 10"/></svg>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="fi" style="transition-delay:0.18s">
+            <article class="work-row">
+              <div class="work-left">
+                <div class="work-n">04</div>
+                <div class="work-cat">CRM · FINTECH</div>
+                <div class="work-yr">2024</div>
+              </div>
+              <div>
+                <h3 class="work-title">Blueo CRM — Sistema Empresarial de Leads</h3>
+                <p class="work-desc">CRM propietario con arquitectura SaaS, dashboards en tiempo real y trazabilidad 360° del funnel de ventas para operaciones fintech.</p>
+                <div class="work-metric">◆ Impacto económico USD 15k–25k anuales</div>
+              </div>
+              <div class="work-right">
+                <div class="chip-row">
+                  <span class="chip">React</span>
+                  <span class="chip">Firebase</span>
+                  <span class="chip">Next.js</span>
+                  <span class="chip">Analytics</span>
+                </div>
+                <a href="#" class="work-link">Leer caso completo
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h9M8 3l3.5 3.5L8 10"/></svg>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="fi" style="transition-delay:0.24s">
+            <article class="work-row">
+              <div class="work-left">
+                <div class="work-n">05</div>
+                <div class="work-cat">GROWTH PLATFORM</div>
+                <div class="work-yr">2024</div>
+              </div>
+              <div>
+                <h3 class="work-title">Sistema de Referidos Multi-Tienda — Blueo</h3>
+                <p class="work-desc">Plataforma distribuida de incentivos, campañas y wallet digital con operación en tiempo real y trazabilidad por tienda y canal.</p>
+                <div class="work-metric">◆ Operación distribuida en tiempo real</div>
+              </div>
+              <div class="work-right">
+                <div class="chip-row">
+                  <span class="chip">Next.js</span>
+                  <span class="chip">Supabase</span>
+                  <span class="chip">Wallet</span>
+                  <span class="chip">Firebase</span>
+                </div>
+                <a href="#" class="work-link">Leer caso completo
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h9M8 3l3.5 3.5L8 10"/></svg>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="fi" style="transition-delay:0.3s">
+            <article class="work-row">
+              <div class="work-left">
+                <div class="work-n">06</div>
+                <div class="work-cat">AI · STRATEGY</div>
+                <div class="work-yr">2024</div>
+              </div>
+              <div>
+                <h3 class="work-title">AI-First Loyalty Framework &amp; Business Simulator</h3>
+                <p class="work-desc">Segmentación inteligente, beneficios dinámicos y simulación financiera para decisiones estratégicas de largo plazo.</p>
+                <div class="work-metric">◆ Simulación financiera IA-first</div>
+              </div>
+              <div class="work-right">
+                <div class="chip-row">
+                  <span class="chip">LLM</span>
+                  <span class="chip">React</span>
+                  <span class="chip">Modeling</span>
+                  <span class="chip">Supabase</span>
+                </div>
+                <a href="#" class="work-link">Leer caso completo
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h9M8 3l3.5 3.5L8 10"/></svg>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="fi" style="transition-delay:0.36s">
+            <article class="work-row">
+              <div class="work-left">
+                <div class="work-n">07</div>
+                <div class="work-cat">DIGITAL TRANSFORMATION</div>
+                <div class="work-yr">2023</div>
+              </div>
+              <div>
+                <h3 class="work-title">Transformación Digital en Productos Financieros — Altia VC</h3>
+                <p class="work-desc">Desarrollo de nuevos productos financieros digitales, KPIs estratégicos, analítica avanzada y crecimiento digital de la unidad de negocio.</p>
+                <div class="work-metric">◆ Crecimiento digital de unidad de negocio</div>
+              </div>
+              <div class="work-right">
+                <div class="chip-row">
+                  <span class="chip">BI</span>
+                  <span class="chip">Analytics</span>
+                  <span class="chip">Product</span>
+                  <span class="chip">KPI design</span>
+                </div>
+                <a href="#" class="work-link">Leer caso completo
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h9M8 3l3.5 3.5L8 10"/></svg>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div class="fi" style="transition-delay:0.42s">
+            <article class="work-row">
+              <div class="work-left">
+                <div class="work-n">08</div>
+                <div class="work-cat">OPERATIONS · BI</div>
+                <div class="work-yr">2014–2023</div>
+              </div>
+              <div>
+                <h3 class="work-title">Centro de Negocios Ágil, BI y Roadmaps Operativos — Instacredit</h3>
+                <p class="work-desc">9 años de operación en entorno financiero regulado: crecimiento y mantenimiento de carteras superiores a USD 12M, diseño de procesos, control de riesgo, presupuesto, transformación de inteligencia de negocio y ejecución de roadmaps operativos con impacto directo en resultados del área.</p>
+                <div class="work-metric">◆ 9 años · Carteras sup. USD 12M · Operación regulada</div>
+              </div>
+              <div class="work-right">
+                <div class="chip-row">
+                  <span class="chip">BI</span>
+                  <span class="chip">Operations</span>
+                  <span class="chip">Risk</span>
+                  <span class="chip">Compliance</span>
+                  <span class="chip">Budget</span>
+                </div>
+                <a href="#" class="work-link">Leer caso completo
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h9M8 3l3.5 3.5L8 10"/></svg>
+                </a>
+              </div>
+            </article>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- APPROACH -->
+    <section id="approach">
+      <div class="section-wrap">
+        <div class="fi section-head">
+          <span class="section-num">—</span>
+          <span class="section-title">Cómo pienso los sistemas</span>
+        </div>
+        <div class="approach-text">
+          <div class="fi"><p class="approach-p">Pienso en empresas como <strong>sistemas</strong>, no como áreas aisladas. Cada decisión —desde la originación de un crédito hasta la activación de un usuario— es un nodo en una red de información, riesgo y ejecución.</p></div>
+          <div class="fi" style="transition-delay:0.09s"><p class="approach-p">Mi rol es diseñar el cerebro: la arquitectura donde estrategia, datos, IA y operaciones se encuentran para producir <strong>decisiones</strong>, no solo reportes.</p></div>
+          <div class="fi" style="transition-delay:0.18s"><p class="approach-p">Trabajo simultáneamente como arquitecto, operador, product owner, ejecutivo financiero e ingeniero. No porque sea polivalente por gusto, sino porque los sistemas empresariales modernos exigen ese <strong>punto de vista convergente</strong>.</p></div>
+          <div class="fi" style="transition-delay:0.27s"><p class="approach-p">Priorizo ejecución sobre teoría, impacto medible sobre promesas, escalabilidad sobre improvisación, y <strong>IA aplicada</strong> sobre hype.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WRITING -->
+    <section id="writing">
+      <div class="section-wrap">
+        <div class="fi section-head">
+          <span class="section-num">—</span>
+          <span class="section-title">Notas seleccionadas</span>
+        </div>
+        <div class="writing-list">
+          <div class="fi">
+            <article class="writing-row">
+              <div class="w-date">Próx.</div>
+              <div>
+                <h3 class="w-title">Por qué el 90% de los pilotos de IA empresarial nunca llegan a producción</h3>
+                <p class="w-desc">El gap entre proof-of-concept y producción no es técnico: es arquitectónico y organizacional.</p>
+                <span class="w-badge">Próximamente</span>
+              </div>
+            </article>
+          </div>
+          <div class="fi" style="transition-delay:0.08s">
+            <article class="writing-row">
+              <div class="w-date">Próx.</div>
+              <div>
+                <h3 class="w-title">Arquitectura multi-agente: cuándo es solución y cuándo es complejidad innecesaria</h3>
+                <p class="w-desc">Una guía pragmática para decidir cuándo orquestar agentes y cuándo un script bien escrito es suficiente.</p>
+                <span class="w-badge">Próximamente</span>
+              </div>
+            </article>
+          </div>
+          <div class="fi" style="transition-delay:0.16s">
+            <article class="writing-row">
+              <div class="w-date">Próx.</div>
+              <div>
+                <h3 class="w-title">Diseñar para la escala que aún no tienes: arquitectura de producto en fintech</h3>
+                <p class="w-desc">Las decisiones de arquitectura que parecen innecesarias al inicio son las que determinan si puedes operar a escala cuando el negocio lo exige.</p>
+                <span class="w-badge">Próximamente</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="section-wrap">
+        <div class="fi section-head">
+          <span class="section-num">—</span>
+          <span class="section-title">Contacto</span>
+        </div>
+        <div class="fi" style="transition-delay:0.1s">
+          <div class="contact-grid">
+            <img src="assets/alejandro-valencia.png" alt="Alejandro Valencia — AI Systems Architect" class="contact-photo" />
+            <div>
+              <h2 class="contact-name">Alejandro<br />Valencia</h2>
+              <p class="contact-role">AI Systems Architect · Ciudad de Panamá</p>
+              <div class="contact-items">
+                <div class="contact-item">
+                  <span class="c-label">Email</span>
+                  <a href="mailto:valenciakmc@icloud.com" class="c-val">valenciakmc@icloud.com</a>
+                </div>
+                <div class="contact-item">
+                  <span class="c-label">LinkedIn</span>
+                  <a href="https://www.linkedin.com/in/alejandro-valencia-49b0b7206/" target="_blank" rel="noopener noreferrer" class="c-val">linkedin.com/in/alejandro-valencia</a>
+                </div>
+                <div class="contact-item">
+                  <span class="c-label">Ubicación</span>
+                  <span class="c-val">Ciudad de Panamá, PA</span>
+                </div>
+              </div>
+              <a href="https://www.linkedin.com/in/alejandro-valencia-49b0b7206/" target="_blank" rel="noopener noreferrer" class="btn-p">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg>
+                Conectar en LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span class="ft">Alejandro Valencia · 2026</span>
+    <span class="ft">AI Systems Architect · Ciudad de Panamá · Todos los derechos reservados</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
