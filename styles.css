@@ -430,6 +430,7 @@ nav {
   border: 1px solid var(--rule); transition: border-color 0.18s, color 0.18s;
 }
 .btn-s:hover { border-color: var(--ink2); }
+.contact-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
 
 /* ── FOOTER ── */
 footer {
