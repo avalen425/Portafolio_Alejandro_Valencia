@@ -80,4 +80,57 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll, { passive: true });
   onScroll();
+
+  // ── DIALOG / MODAL SYSTEM ──
+  var openBtns = document.querySelectorAll('[data-open-modal]');
+  var closeBtns = document.querySelectorAll('[data-close-modal]');
+
+  openBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var modalId = btn.getAttribute('data-open-modal');
+      var modal = document.getElementById(modalId);
+      if (modal) {
+        modal.showModal();
+        document.body.classList.add('modal-open'); // Prevent background scrolling
+      }
+    });
+  });
+
+  closeBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var modal = btn.closest('dialog');
+      if (modal) {
+        modal.close();
+      }
+    });
+  });
+
+  // Handle closing events (Esc key or backdrop clicks in unsupported browsers)
+  var dialogs = document.querySelectorAll('dialog');
+  dialogs.forEach(function (modal) {
+    modal.addEventListener('close', function () {
+      document.body.classList.remove('modal-open'); // Re-enable background scrolling
+    });
+
+    // Fallback for light-dismiss (Esc is handled natively by showModal)
+    if (!('closedBy' in HTMLDialogElement.prototype)) {
+      modal.addEventListener('click', function (event) {
+        if (event.target !== modal) return;
+
+        var rect = modal.getBoundingClientRect();
+        var isDialogContent = (
+          rect.top <= event.clientY &&
+          event.clientY <= rect.top + rect.height &&
+          rect.left <= event.clientX &&
+          event.clientX <= rect.left + rect.width
+        );
+
+        if (!isDialogContent) {
+          modal.close();
+        }
+      });
+    }
+  });
 })();
+
