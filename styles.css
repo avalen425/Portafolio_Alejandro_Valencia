@@ -533,12 +533,13 @@ footer {
   border: 1px solid var(--rule);
   background: var(--bg);
   color: var(--ink);
-  max-width: 860px;
-  width: calc(100% - 32px);
-  max-height: 85vh;
+  width: 90%;
+  max-width: 1100px;
+  min-width: min(90vw, 320px);
+  max-height: 88vh;
   padding: 0;
   border-radius: 0;
-  box-shadow: 0 32px 80px rgba(12, 11, 9, 0.18);
+  box-shadow: 0 40px 100px rgba(12, 11, 9, 0.22), 0 8px 24px rgba(12, 11, 9, 0.08);
   overflow: hidden;
   position: fixed;
   inset: 0;
@@ -592,26 +593,27 @@ body.modal-open {
 /* Modal Layout Elements */
 .modal-close-btn {
   position: absolute;
-  top: 24px;
-  right: 24px;
-  background: none;
-  border: none;
+  top: 28px;
+  right: 28px;
+  background: var(--bg);
+  border: 1px solid var(--rule);
   cursor: pointer;
-  color: var(--ink3);
+  color: var(--ink2);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 10.5px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  transition: color 0.22s, transform 0.22s;
+  letter-spacing: 0.06em;
+  transition: color 0.22s, background 0.22s, border-color 0.22s;
   z-index: 10;
-  padding: 8px;
+  padding: 9px 14px;
 }
 .modal-close-btn:hover {
   color: var(--ink);
-  transform: scale(1.02);
+  background: var(--bg-alt);
+  border-color: var(--ink3);
 }
 .modal-close-btn svg {
   transition: transform 0.3s ease;
@@ -621,9 +623,9 @@ body.modal-open {
 }
 
 .modal-body {
-  padding: 60px 48px;
+  padding: 72px 3.5rem 3.5rem;
   overflow-y: auto;
-  max-height: 85vh;
+  max-height: 88vh;
   scrollbar-width: thin;
   scrollbar-color: var(--rule) transparent;
 }
@@ -642,11 +644,12 @@ body.modal-open {
 
 @media (max-width: 768px) {
   .modal-body {
-    padding: 48px 24px 32px;
+    padding: 64px 24px 40px;
   }
   .modal-close-btn {
     top: 16px;
     right: 16px;
+    padding: 8px 12px;
   }
   .modal-close-btn span {
     display: none;
@@ -660,6 +663,9 @@ body.modal-open {
   color: var(--accent);
   margin-bottom: 16px;
   text-transform: uppercase;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .modal-title {
   font-family: 'Newsreader', serif;
@@ -669,24 +675,35 @@ body.modal-open {
   letter-spacing: -0.02em;
   color: var(--ink);
   margin-bottom: 16px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 .modal-subtitle {
   font-size: clamp(15px, 1.8vw, 17px);
   font-weight: 300;
   color: var(--ink2);
   line-height: 1.55;
   margin-bottom: 32px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .modal-divider {
   height: 1px;
   background: var(--rule);
-  margin: 32px 0;
+  margin: 32px auto;
+  max-width: 900px;
 }
 .modal-text {
-  font-size: 15px;
+  font-size: 15.5px;
   font-weight: 300;
   color: var(--ink);
-  line-height: 1.75;
+  line-height: 1.8;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .modal-text p {
   margin-bottom: 24px;
