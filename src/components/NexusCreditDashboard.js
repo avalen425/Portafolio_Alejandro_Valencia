@@ -810,7 +810,6 @@ window.initNexusCreditDashboard = (function () {
     const {
       isModal = false,
       onClose = null,
-      repoUrl = 'https://github.com/avalen425/nexuscredit-dashboard',
     } = options;
 
     await loadChartJS();
@@ -849,16 +848,7 @@ window.initNexusCreditDashboard = (function () {
     ['NIIF 9','ALM','Tesorería','Cobranza','CRM','BI'].forEach(s => {
       badges.appendChild(txt(s, { fontFamily:mono, fontSize:'8px', letterSpacing:'.07em', textTransform:'uppercase', color:C.c4, padding:'2px 6px', border:`1px solid ${C.bd}`, borderRadius:'2px' }));
     });
-    const repoLink = mk('a', {
-      fontFamily:mono, fontSize:'8.5px', color:C.gold, letterSpacing:'.06em',
-      textDecoration:'none', padding:'4px 10px', border:`1px solid ${C.gold}55`,
-      borderRadius:'2px', whiteSpace:'nowrap',
-    });
-    repoLink.setAttribute('href', repoUrl);
-    repoLink.setAttribute('target', '_blank');
-    repoLink.setAttribute('rel', 'noopener noreferrer');
-    repoLink.textContent = '↗ Repositorio';
-    ap(actions, badges, repoLink);
+    ap(actions, badges);
     if (isModal && onClose) {
       const closeBtn = mk('button', { background:'none', border:`1px solid ${C.bd}`, borderRadius:'2px', color:C.c4, cursor:'pointer', fontFamily:mono, fontSize:'11px', padding:'4px 10px' });
       closeBtn.textContent = '✕';
