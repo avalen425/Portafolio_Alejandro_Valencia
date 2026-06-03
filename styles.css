@@ -1128,19 +1128,12 @@ body.modal-open {
   margin-bottom: 20px;
 }
 .featured-card {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   border: 1px solid var(--rule);
+  padding: 52px 56px;
+  max-width: 860px;
 }
-@media (max-width: 900px) {
-  .featured-card { grid-template-columns: 1fr; }
-}
-.featured-card-left {
-  padding: 48px;
-  border-right: 1px solid var(--rule);
-}
-@media (max-width: 900px) {
-  .featured-card-left { border-right: none; border-bottom: 1px solid var(--rule); padding: 36px 28px; }
+@media (max-width: 768px) {
+  .featured-card { padding: 36px 28px; }
 }
 .featured-card-tag {
   font-family: 'JetBrains Mono', monospace;
@@ -1195,24 +1188,28 @@ body.modal-open {
 }
 .featured-launch-btn:hover { opacity: 0.82; }
 
-/* Right panel — dashboard preview image */
-.featured-card-right {
-  background: #060d1a;
-  padding: 0;
-  display: flex;
-  align-items: stretch;
-  overflow: hidden;
-}
-.featured-preview-img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  display: block;
-}
 
 /* ── NEXUSCREDIT OVERLAY ──────────────────────────────────── */
 #nexus-dashboard-overlay {
   display: none;
+}
+
+/* ── NEXUSCREDIT DASHBOARD — RESPONSIVE ──────────────────── */
+@media (max-width: 768px) {
+  .ncrd-content {
+    padding: 12px 14px !important;
+  }
+  .ncrd-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+  .ncrd-chart-wrap {
+    height: 175px !important;
+  }
+  .ncrd-summary-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6px !important;
+  }
 }
 
 

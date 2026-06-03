@@ -183,7 +183,9 @@ window.initNexusCreditDashboard = (function () {
     return e;
   }
   function grid(cols, gap = '10px') {
-    return mk('div', { display:'grid', gridTemplateColumns:cols, gap });
+    const el = mk('div', { display:'grid', gridTemplateColumns:cols, gap });
+    el.classList.add('ncrd-grid');
+    return el;
   }
   function progressBar(pct, color, height = 2) {
     const track = mk('div', { height:height+'px', background:C.sf2, borderRadius:'1px' });
@@ -193,6 +195,7 @@ window.initNexusCreditDashboard = (function () {
   }
   function mkCanvas(height = 200) {
     const wrap   = mk('div', { position:'relative', height:height+'px', marginTop:'10px' });
+    wrap.classList.add('ncrd-chart-wrap');
     const canvas = document.createElement('canvas');
     wrap.appendChild(canvas);
     return { wrap, canvas };
@@ -730,6 +733,7 @@ window.initNexusCreditDashboard = (function () {
       cWH.appendChild(block);
     });
     const summary = mk('div', { padding:'10px 12px', background:C.bg, borderRadius:'2px', border:`1px solid ${C.bd}`, display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'8px' });
+    summary.classList.add('ncrd-summary-grid');
     [{ l:'Cupo total', v:'$22.0M' }, { l:'Dispuesto', v:'$15.4M' }, { l:'Disponible', v:'$6.6M' }].forEach(s => {
       const item = mk('div');
       ap(item, txt(s.l, { fontFamily:mono, fontSize:'8px', color:C.c4, marginBottom:'2px' }), txt(s.v, { fontFamily:mono, fontSize:'13px', fontWeight:'500', color:C.cream }));
@@ -893,6 +897,7 @@ window.initNexusCreditDashboard = (function () {
 
     // ── CONTENT ────────────────────────────────────────────────
     const content = mk('div', { padding:'18px 22px' });
+    content.classList.add('ncrd-content');
     containerEl.appendChild(content);
 
     function switchTab(t) {
