@@ -1117,7 +1117,7 @@ body.modal-open {
 
 /* ── FEATURED PROJECT SECTION ─────────────────────────────── */
 #featured-dashboard {
-  padding: 80px 0 0;
+  padding: 80px 0 140px;
 }
 .featured-label {
   font-family: 'JetBrains Mono', monospace;
@@ -1128,12 +1128,11 @@ body.modal-open {
   margin-bottom: 20px;
 }
 .featured-card {
-  border: 1px solid var(--rule);
-  padding: 52px 56px;
-  max-width: 860px;
-}
-@media (max-width: 768px) {
-  .featured-card { padding: 36px 28px; }
+  max-width: 800px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
 }
 .featured-card-tag {
   font-family: 'JetBrains Mono', monospace;

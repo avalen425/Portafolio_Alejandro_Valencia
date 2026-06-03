@@ -1,6 +1,12 @@
 (function () {
   'use strict';
 
+  // ── SCROLL RESTORATION — always start at top ──
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
+
   // ── MOBILE MENU ──
   var menuBtn = document.getElementById('menu-btn');
   var mobileNav = document.getElementById('mobile-nav');
