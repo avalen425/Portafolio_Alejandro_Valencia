@@ -32,6 +32,7 @@
         <a href="#approach">Enfoque</a>
         <a href="#writing">Notas</a>
         <a href="#contact">Contacto</a>
+        <button class="nav-dashboard-btn" id="nav-open-nexus" aria-label="Abrir Dashboard Fintech Interactivo">Dashboard Fintech ↗</button>
       </div>
       <div class="nav-right">
         <button class="nav-menu-btn" id="menu-btn" aria-label="Menú" aria-expanded="false">
@@ -56,6 +57,7 @@
     <a href="#approach">Enfoque</a>
     <a href="#writing">Notas</a>
     <a href="#contact">Contacto</a>
+    <button class="nav-dashboard-btn nav-dashboard-btn--mobile" id="mobile-open-nexus">Dashboard Fintech ↗</button>
   </div>
 
   <main>
@@ -84,6 +86,67 @@
             Conectar en LinkedIn
           </a>
         </div>
+      </div>
+    </section>
+
+    <!-- FEATURED DASHBOARD -->
+    <section id="featured-dashboard">
+      <div class="section-wrap">
+        <div class="featured-label">// Proyecto Destacado</div>
+        <article class="featured-card">
+
+          <!-- Left: copy + CTA -->
+          <div class="featured-card-left">
+            <div class="featured-card-tag">FINTECH · BI · C-SUITE · ANALYTICS</div>
+            <h2 class="featured-card-title">NexusCredit: Analytics Executive Dashboard</h2>
+            <p class="featured-card-desc">Panel de control gerencial C-Suite para operaciones fintech de alta escala. KPIs de riesgo NIIF 9, análisis de cartera por canal, proyecciones de mora con línea de tolerancia del comité y estructura de fondeo institucional — sobre datos simulados de una cartera activa superior a $10M USD.</p>
+            <div class="featured-card-meta">
+              <span>Vanilla JS · Chart.js · 6 módulos ejecutivos · sin dependencias de framework</span>
+              <span>Cartera &gt;$10M USD · Período Ene–Jun 2026 · Datos simulados</span>
+            </div>
+            <button class="featured-launch-btn" id="launch-nexus-btn">
+              Lanzar App Interactiva ↗
+            </button>
+          </div>
+
+          <!-- Right: dashboard preview mock -->
+          <div class="featured-card-right" aria-hidden="true">
+            <div class="featured-card-preview">
+              <div class="featured-preview-bar">
+                <span class="featured-preview-dot"></span>
+                <span class="featured-preview-dot"></span>
+                <span class="featured-preview-dot"></span>
+                <span class="featured-preview-label">NexusCredit · Panel C-Suite · v2.0</span>
+              </div>
+              <div class="featured-preview-kpis">
+                <div class="featured-kpi">
+                  <div class="featured-kpi-val">4,837</div>
+                  <div class="featured-kpi-lbl">Operaciones</div>
+                </div>
+                <div class="featured-kpi">
+                  <div class="featured-kpi-val featured-kpi-warn">6.7%</div>
+                  <div class="featured-kpi-lbl">Índice mora</div>
+                </div>
+                <div class="featured-kpi">
+                  <div class="featured-kpi-val featured-kpi-gold">112.5%</div>
+                  <div class="featured-kpi-lbl">PCR NIIF 9</div>
+                </div>
+                <div class="featured-kpi">
+                  <div class="featured-kpi-val">$10M+</div>
+                  <div class="featured-kpi-lbl">Cartera activa</div>
+                </div>
+              </div>
+              <div class="featured-preview-tabs">
+                <span class="featured-tab featured-tab--active">Resumen ejecutivo</span>
+                <span class="featured-tab">Adquisición</span>
+                <span class="featured-tab">Cobranza</span>
+                <span class="featured-tab">Predicción</span>
+                <span class="featured-tab">Tesorería</span>
+              </div>
+            </div>
+          </div>
+
+        </article>
       </div>
     </section>
 
@@ -1045,6 +1108,44 @@
     </div>
   </dialog>
 
+  <!-- NEXUSCREDIT DASHBOARD OVERLAY -->
+  <div id="nexus-dashboard-overlay" aria-hidden="true">
+    <div id="nexus-dashboard-container"></div>
+  </div>
+
+  <script src="src/components/NexusCreditDashboard.js"></script>
   <script src="script.js"></script>
+  <script>
+    (function () {
+      function openNexusDashboard() {
+        var overlay   = document.getElementById('nexus-dashboard-overlay');
+        var container = document.getElementById('nexus-dashboard-container');
+        overlay.style.display = 'block';
+        overlay.removeAttribute('aria-hidden');
+        window.initNexusCreditDashboard(container, {
+          isModal: true,
+          onClose: closeNexusDashboard,
+          repoUrl: 'https://github.com/avalen425/nexuscredit-dashboard',
+        });
+      }
+      function closeNexusDashboard() {
+        var overlay = document.getElementById('nexus-dashboard-overlay');
+        overlay.style.display = 'none';
+        overlay.setAttribute('aria-hidden', 'true');
+      }
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          var overlay = document.getElementById('nexus-dashboard-overlay');
+          if (overlay && overlay.style.display === 'block') closeNexusDashboard();
+        }
+      });
+      document.addEventListener('DOMContentLoaded', function () {
+        ['nav-open-nexus', 'mobile-open-nexus', 'launch-nexus-btn'].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) el.addEventListener('click', openNexusDashboard);
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
