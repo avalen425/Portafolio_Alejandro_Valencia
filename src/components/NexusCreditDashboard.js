@@ -804,6 +804,388 @@ window.initNexusCreditDashboard = (function () {
   }
 
   // ══════════════════════════════════════════════════════════════
+  // TAB — ARQUITECTURA DE DATOS
+  // ══════════════════════════════════════════════════════════════
+  function renderArquitecturaDatos(ct) {
+
+    // ── Local helper: section title ────────────────────────────
+    function secTitle(num, title) {
+      const wrap = mk('div', { marginBottom:'16px', paddingBottom:'10px', borderBottom:`1px solid ${C.bd}` });
+      ap(wrap,
+        txt(num, { fontFamily:mono, fontSize:'8px', color:C.c4, letterSpacing:'.15em', textTransform:'uppercase', marginBottom:'3px' }),
+        txt(title, { fontFamily:sans, fontSize:'14px', color:C.cream, letterSpacing:'.01em' })
+      );
+      return wrap;
+    }
+
+    // ── SECCIÓN 1 — Diagnóstico (Anti-patrones) ────────────────
+    ct.appendChild(secTitle('01 · Diagnóstico', 'Arquitectura Inicial — Hallazgos Críticos'));
+
+    const antipatrones = [
+      {
+        letra:'A', subtag:'Granularidad',
+        titulo:'Contaminación Analítica en Capas Transaccionales',
+        problema:'Queries analíticas OLAP ejecutadas sobre tablas OLTP de originación y cobranza, compartiendo conexiones y bloqueos con la capa operacional.',
+        impacto:'Degradación de latencia >40% en hora pico. Lock contention en tablas core. Riesgo de indisponibilidad operacional.',
+      },
+      {
+        letra:'B', subtag:'Silos',
+        titulo:'Inexistencia de un Modelo Dimensional Conformado',
+        problema:'Ausencia de DWH con dimensiones conformadas. Cada área construye sus propias vistas sobre tablas fuente, generando métricas incompatibles.',
+        impacto:'Mora reportada difiere entre Cobranza y Riesgo (+2.3pp). Imposibilidad de drill-down cross-funcional. Comité recibe reportes contradictorios.',
+      },
+      {
+        letra:'C', subtag:'Historización',
+        titulo:'Ausencia de Soporte para Variaciones Temporales',
+        problema:'Las tablas dimensionales no implementan SCD (Slowly Changing Dimensions). Los cambios sobreescriben el estado anterior sin registro histórico.',
+        impacto:'Imposibilidad de auditoría temporal. Backtesting de modelos ML inválido. Incumplimiento de trazabilidad de staging NIIF 9.',
+      },
+      {
+        letra:'D', subtag:'Brecha Regulatoria',
+        titulo:'Subdesarrollo de Métricas de Riesgo Crediticio y Fondeo',
+        problema:'El modelo transaccional carece de tablas dedicadas para ECL, snapshots de cartera o utilización de líneas de fondeo institucional.',
+        impacto:'Cálculo manual de PCR, NIM y LGD en Excel. Demora de 3–5 días hábiles en cierre mensual. Exposición regulatoria ante supervisión NIIF 9.',
+      },
+    ];
+
+    const apGrid = grid('1fr 1fr', '12px');
+    apGrid.style.marginBottom = '28px';
+    antipatrones.forEach(d => {
+      const c = card({ padding:'14px 16px' });
+      c.style.background = C.sf2;
+      const badge = mk('span', {
+        display:'inline-flex', alignItems:'center',
+        background:'#3a0f0f', border:'1px solid #7a2020',
+        borderRadius:'2px', padding:'2px 8px', marginBottom:'10px',
+        fontFamily:mono, fontSize:'7px', letterSpacing:'.1em',
+        textTransform:'uppercase', color:'#e07070',
+      });
+      badge.textContent = '⚠ Anti-patrón · ' + d.letra;
+      ap(c,
+        badge,
+        txt(d.subtag,  { fontFamily:mono, fontSize:'7px',    color:C.c3,    letterSpacing:'.12em', textTransform:'uppercase', marginBottom:'4px' }),
+        txt(d.titulo,  { fontFamily:mono, fontSize:'10px',   color:C.cream, lineHeight:'1.4',  marginBottom:'10px' }),
+        txt('Problema',{ fontFamily:mono, fontSize:'7px',    color:C.c4,    letterSpacing:'.1em',  textTransform:'uppercase', marginBottom:'4px' }),
+        txt(d.problema,{ fontFamily:sans, fontSize:'11.5px', color:C.c2,    lineHeight:'1.55', marginBottom:'10px' })
+      );
+      const impactBox = mk('div', {
+        background:'#1a0f0f', borderLeft:`2px solid ${C.alert}`,
+        padding:'8px 10px', borderRadius:'0 2px 2px 0',
+      });
+      ap(impactBox,
+        txt('Impacto', { fontFamily:mono, fontSize:'7px', color:C.alert, letterSpacing:'.1em', textTransform:'uppercase', marginBottom:'4px' }),
+        txt(d.impacto, { fontFamily:sans, fontSize:'11px', color:'#d4a0a0', lineHeight:'1.5' })
+      );
+      c.appendChild(impactBox);
+      apGrid.appendChild(c);
+    });
+    ct.appendChild(apGrid);
+
+    // ── SECCIÓN 2 — Diccionario de Datos ──────────────────────
+    ct.appendChild(secTitle('02 · Modelo Corregido', 'Diccionario de Datos — Gold Layer'));
+
+    const AREAS = [
+      {
+        key:'dimensiones', label:'Dimensiones Core',
+        tables:[
+          {
+            name:'dim_cliente_golden', desc:'Registro Golden — SCD Tipo 2',
+            fields:[
+              { n:'cliente_id_golden',          t:'VARCHAR(36)',  pk:1,fk:0,m:0, d:'ID unificado del cliente vía Identity Resolution' },
+              { n:'fecha_alta_golden',           t:'DATE',         pk:0,fk:0,m:0, d:'Fecha de incorporación al Golden Record' },
+              { n:'segmento_riesgo',             t:'ENUM',         pk:0,fk:0,m:0, d:'[BAJO / MEDIO / ALTO / MUY_ALTO]' },
+              { n:'score_credito_interno',       t:'DECIMAL(5,2)', pk:0,fk:0,m:1, d:'Score propietario 0–100, recalculado mensual' },
+              { n:'canal_adquisicion_principal', t:'VARCHAR',      pk:0,fk:1,m:0, d:'→ dim_canal_adquisicion' },
+              { n:'scd_version',                 t:'INTEGER',      pk:0,fk:0,m:0, d:'Versión SCD Tipo 2 del registro' },
+              { n:'scd_fecha_inicio',            t:'DATE',         pk:0,fk:0,m:0, d:'Inicio de vigencia del estado' },
+              { n:'scd_fecha_fin',               t:'DATE',         pk:0,fk:0,m:0, d:'Fin de vigencia (NULL = activo)' },
+              { n:'scd_es_actual',               t:'BOOLEAN',      pk:0,fk:0,m:0, d:'Flag de registro vigente' },
+            ],
+          },
+          {
+            name:'dim_producto_credito', desc:'Catálogo de productos crediticios',
+            fields:[
+              { n:'producto_id',            t:'INTEGER',      pk:1,fk:0,m:0, d:'Identificador único del producto' },
+              { n:'nombre_producto',        t:'VARCHAR(100)', pk:0,fk:0,m:0, d:'Nombre comercial del producto' },
+              { n:'tipo_credito',           t:'ENUM',         pk:0,fk:0,m:0, d:'[PERSONAL / NÓMINA / EMPRESARIAL / MICRO]' },
+              { n:'plazo_maximo_meses',     t:'INTEGER',      pk:0,fk:0,m:0, d:'Plazo máximo de originación (meses)' },
+              { n:'tasa_interes_base_ea',   t:'DECIMAL(6,4)', pk:0,fk:0,m:1, d:'Tasa efectiva anual base del producto' },
+              { n:'tasa_mora_penalizacion', t:'DECIMAL(6,4)', pk:0,fk:0,m:1, d:'Tasa de penalización por mora' },
+              { n:'politica_garantia',      t:'VARCHAR',      pk:0,fk:0,m:0, d:'Descripción política de garantías' },
+              { n:'requiere_colateral',     t:'BOOLEAN',      pk:0,fk:0,m:0, d:'Indicador de colateral obligatorio' },
+            ],
+          },
+        ],
+      },
+      {
+        key:'operaciones', label:'Operaciones',
+        tables:[
+          {
+            name:'fct_originacion_ventas', desc:'Fact de originaciones — grain: operación',
+            fields:[
+              { n:'originacion_id',     t:'BIGINT',        pk:1,fk:0,m:0, d:'Surrogate key de la transacción' },
+              { n:'cliente_id_golden',  t:'VARCHAR(36)',   pk:0,fk:1,m:0, d:'→ dim_cliente_golden' },
+              { n:'producto_id',        t:'INTEGER',       pk:0,fk:1,m:0, d:'→ dim_producto_credito' },
+              { n:'fecha_desembolso',   t:'DATE',          pk:0,fk:0,m:0, d:'Fecha efectiva de desembolso' },
+              { n:'monto_desembolsado', t:'DECIMAL(15,2)', pk:0,fk:0,m:1, d:'Monto bruto desembolsado en USD' },
+              { n:'tasa_interes_ea',    t:'DECIMAL(6,4)',  pk:0,fk:0,m:1, d:'Tasa pactada efectiva anual' },
+              { n:'canal_venta',        t:'VARCHAR',       pk:0,fk:1,m:0, d:'→ dim_canal_adquisicion' },
+              { n:'cac_asignado',       t:'DECIMAL(10,2)', pk:0,fk:0,m:1, d:'Costo de adquisición asignado al cliente' },
+              { n:'score_aprobacion',   t:'DECIMAL(5,2)',  pk:0,fk:0,m:1, d:'Score en el momento de aprobación' },
+              { n:'estado_operacion',   t:'ENUM',          pk:0,fk:0,m:0, d:'[VIGENTE / CANCELADO / CASTIGADO / REESTRUCTURADO]' },
+            ],
+          },
+        ],
+      },
+      {
+        key:'riesgo', label:'Riesgo & Fondeo',
+        tables:[
+          {
+            name:'fct_cartera_snapshot_diario', desc:'Snapshot diario de cartera — grain: operación × día',
+            fields:[
+              { n:'snapshot_id',   t:'BIGINT',        pk:1,fk:0,m:0, d:'Surrogate key del snapshot' },
+              { n:'fecha_snapshot',t:'DATE',          pk:0,fk:0,m:0, d:'Fecha de corte del snapshot' },
+              { n:'originacion_id',t:'BIGINT',        pk:0,fk:1,m:0, d:'→ fct_originacion_ventas' },
+              { n:'saldo_capital', t:'DECIMAL(15,2)', pk:0,fk:0,m:1, d:'Saldo de capital vigente' },
+              { n:'dias_mora',     t:'INTEGER',       pk:0,fk:0,m:1, d:'Días de atraso a fecha de corte' },
+              { n:'bucket_mora',   t:'ENUM',          pk:0,fk:0,m:0, d:'[AL_DÍA / 1-30 / 31-60 / 61-90 / 90+]' },
+              { n:'stage_niif9',   t:'INTEGER',       pk:0,fk:0,m:1, d:'Stage NIIF 9 [1 / 2 / 3]' },
+              { n:'pcr_cobertura', t:'DECIMAL(6,4)',  pk:0,fk:0,m:1, d:'Porcentaje Provisión / Saldo capital' },
+            ],
+          },
+          {
+            name:'fct_provisiones_niif9', desc:'Pérdida esperada — grain: operación × mes',
+            fields:[
+              { n:'provision_id',  t:'BIGINT',        pk:1,fk:0,m:0, d:'Surrogate key de la provisión' },
+              { n:'originacion_id',t:'BIGINT',        pk:0,fk:1,m:0, d:'→ fct_originacion_ventas' },
+              { n:'fecha_calculo', t:'DATE',          pk:0,fk:0,m:0, d:'Fecha de cálculo de la provisión' },
+              { n:'pd_estimada',   t:'DECIMAL(8,6)',  pk:0,fk:0,m:1, d:'Probability of Default (modelo ML)' },
+              { n:'lgd_estimada',  t:'DECIMAL(6,4)',  pk:0,fk:0,m:1, d:'Loss Given Default (histórico por segmento)' },
+              { n:'ead_saldo',     t:'DECIMAL(15,2)', pk:0,fk:0,m:1, d:'Exposure at Default = saldo capital' },
+              { n:'ecl_calculado', t:'DECIMAL(15,2)', pk:0,fk:0,m:1, d:'ECL = PD × LGD × EAD' },
+              { n:'stage_asignado',t:'INTEGER',       pk:0,fk:0,m:0, d:'Stage NIIF 9 resultante [1 / 2 / 3]' },
+            ],
+          },
+          {
+            name:'fct_lineas_fondeo_utilizacion', desc:'Utilización de líneas institucionales — grain: línea × día',
+            fields:[
+              { n:'fondeo_id',                t:'BIGINT',        pk:1,fk:0,m:0, d:'Surrogate key del registro' },
+              { n:'linea_id',                 t:'INTEGER',       pk:0,fk:1,m:0, d:'→ dim_linea_fondeo_institucional' },
+              { n:'fecha_registro',           t:'DATE',          pk:0,fk:0,m:0, d:'Fecha del registro de utilización' },
+              { n:'monto_linea_total',        t:'DECIMAL(15,2)', pk:0,fk:0,m:1, d:'Cupo total de la línea (USD)' },
+              { n:'monto_utilizado',          t:'DECIMAL(15,2)', pk:0,fk:0,m:1, d:'Monto dispuesto a fecha' },
+              { n:'costo_fondeo_tasa_pct',    t:'DECIMAL(6,4)',  pk:0,fk:0,m:1, d:'Tasa de costo del fondeo (EA)' },
+              { n:'ingreso_interes_generado', t:'DECIMAL(15,2)', pk:0,fk:0,m:1, d:'Ingreso financiero generado' },
+              { n:'nim_linea',                t:'DECIMAL(8,6)',  pk:0,fk:0,m:1, d:'NIM = ingreso − (utilizado × costo_fondeo)' },
+            ],
+          },
+        ],
+      },
+    ];
+
+    const dictWrap = mk('div', { marginBottom:'28px' });
+
+    // Sub-tab nav
+    const subNav = mk('div', { display:'flex', gap:'2px', borderBottom:`1px solid ${C.bd}`, marginBottom:'12px' });
+    const subBtns = {}, areaConts = {};
+    let activeArea = AREAS[0].key;
+    AREAS.forEach((area, idx) => {
+      const btn = mk('button', {
+        background:'none', border:'none', cursor:'pointer',
+        fontFamily:mono, fontSize:'8px', letterSpacing:'.1em', textTransform:'uppercase',
+        color: idx===0 ? C.gold : C.c4, padding:'8px 14px',
+        borderBottom:`1px solid ${idx===0 ? C.gold : 'transparent'}`,
+        transition:'color .15s', whiteSpace:'nowrap',
+      });
+      btn.textContent = area.label;
+      subBtns[area.key] = btn;
+      subNav.appendChild(btn);
+    });
+    dictWrap.appendChild(subNav);
+
+    // Search input
+    const searchWrap = mk('div', {
+      display:'flex', alignItems:'center',
+      background:C.sf2, border:`1px solid ${C.bd}`,
+      borderRadius:'3px', padding:'6px 10px', marginBottom:'12px',
+    });
+    const inp = document.createElement('input');
+    Object.assign(inp.style, {
+      background:'none', border:'none', outline:'none',
+      fontFamily:mono, fontSize:'10.5px', color:C.c2, width:'100%',
+    });
+    inp.placeholder = '🔍  Buscar campo o descripción...';
+    inp.setAttribute('autocomplete', 'off');
+    const phStyle = document.createElement('style');
+    phStyle.textContent = '.ncrd-arch-search::placeholder{color:' + C.c4 + '}';
+    inp.classList.add('ncrd-arch-search');
+    searchWrap.appendChild(inp);
+    dictWrap.appendChild(phStyle);
+    dictWrap.appendChild(searchWrap);
+
+    // th helper
+    function thCell(h) {
+      const th = document.createElement('th');
+      th.textContent = h;
+      Object.assign(th.style, {
+        textAlign:'left', padding:'5px 8px', fontSize:'7.5px',
+        letterSpacing:'.08em', textTransform:'uppercase',
+        color:C.c4, borderBottom:`1px solid ${C.bd}`,
+        fontWeight:'500', background:C.sf, whiteSpace:'nowrap',
+      });
+      return th;
+    }
+
+    // Build area containers
+    AREAS.forEach((area, ai) => {
+      const aWrap = mk('div');
+      areaConts[area.key] = aWrap;
+
+      area.tables.forEach(tbl => {
+        const tblHead = mk('div', { display:'flex', alignItems:'baseline', gap:'8px', marginBottom:'6px', marginTop: ai===0 ? '2px' : '16px' });
+        ap(tblHead,
+          txt(tbl.name, { fontFamily:mono, fontSize:'11px', color:C.gold }),
+          txt(tbl.desc, { fontFamily:mono, fontSize:'8px',  color:C.c4  })
+        );
+        aWrap.appendChild(tblHead);
+
+        const tblEl = document.createElement('table');
+        Object.assign(tblEl.style, { width:'100%', borderCollapse:'collapse', fontFamily:mono, fontSize:'10.5px', marginBottom:'8px' });
+
+        const thead = document.createElement('thead');
+        const hRow  = document.createElement('tr');
+        ['Campo','Tipo','Clave','Descripción'].forEach(h => hRow.appendChild(thCell(h)));
+        thead.appendChild(hRow);
+        tblEl.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
+        tbl.fields.forEach((f, ri) => {
+          const tr = document.createElement('tr');
+          tr.dataset.f = f.n.toLowerCase() + ' ' + f.d.toLowerCase();
+          tr.style.background = ri%2===0 ? 'transparent' : C.sf+'80';
+
+          const nameColor = f.pk ? '#7b9fff' : f.fk ? '#a78bfa' : f.m ? '#4ade80' : C.c2;
+          const tdN = document.createElement('td');
+          tdN.textContent = f.n;
+          Object.assign(tdN.style, { padding:'5px 8px', color:nameColor, fontWeight:f.pk?'500':'400', borderBottom:`1px solid ${C.bd}22`, whiteSpace:'nowrap' });
+
+          const tdT = document.createElement('td');
+          tdT.textContent = f.t;
+          Object.assign(tdT.style, { padding:'5px 8px', color:C.c4, fontSize:'9px', borderBottom:`1px solid ${C.bd}22`, whiteSpace:'nowrap' });
+
+          const tdK = document.createElement('td');
+          if (f.pk || f.fk || f.m) {
+            const bg = f.pk ? '#7b9fff22' : f.fk ? '#a78bfa22' : '#4ade8022';
+            const cl = f.pk ? '#7b9fff'   : f.fk ? '#a78bfa'   : '#4ade80';
+            const br = f.pk ? '#7b9fff44' : f.fk ? '#a78bfa44' : '#4ade8044';
+            const bdg = mk('span', { display:'inline-flex', alignItems:'center', padding:'1px 5px', borderRadius:'2px', fontSize:'7px', fontFamily:mono, letterSpacing:'.06em', background:bg, color:cl, border:`1px solid ${br}` });
+            bdg.textContent = f.pk ? '🔑 PK' : f.fk ? '🔗 FK' : '📊 MTR';
+            tdK.appendChild(bdg);
+          }
+          Object.assign(tdK.style, { padding:'5px 8px', borderBottom:`1px solid ${C.bd}22`, whiteSpace:'nowrap' });
+
+          const tdD = document.createElement('td');
+          tdD.textContent = f.d;
+          Object.assign(tdD.style, { padding:'5px 8px', color:C.c3, fontSize:'10px', lineHeight:'1.4', borderBottom:`1px solid ${C.bd}22` });
+
+          ap(tr, tdN, tdT, tdK, tdD);
+          tbody.appendChild(tr);
+        });
+        tblEl.appendChild(tbody);
+        aWrap.appendChild(tblEl);
+      });
+
+      // Fórmulas callout — solo en Riesgo & Fondeo
+      if (area.key === 'riesgo') {
+        const fWrap = mk('div', { marginTop:'18px', display:'flex', flexDirection:'column', gap:'10px' });
+        [
+          { label:'ECL — Expected Credit Loss (NIIF 9)', formula:'ECL  =  PD  ×  LGD  ×  EAD', note:'PD: Probability of Default · LGD: Loss Given Default · EAD: Exposure at Default (= saldo capital)' },
+          { label:'NIM — Margen de Interés Neto por Línea', formula:'NIM_Línea  =  ingreso_interes_generado  −  ( monto_utilizado  ×  costo_fondeo_tasa_pct )', note:'Calculado por línea de fondeo; agrupado al portafolio para NIM consolidado del período' },
+        ].forEach(fx => {
+          const box = mk('div', { background:C.sf2, border:`1px solid ${C.bd}`, borderLeft:`3px solid ${C.gold}`, padding:'12px 16px', borderRadius:'0 3px 3px 0' });
+          ap(box,
+            txt(fx.label,   { fontFamily:mono, fontSize:'7.5px', color:C.gold,  letterSpacing:'.1em', textTransform:'uppercase', marginBottom:'8px' }),
+            txt(fx.formula, { fontFamily:mono, fontSize:'13px',  color:C.cream, letterSpacing:'.04em', marginBottom:'6px' }),
+            txt(fx.note,    { fontFamily:mono, fontSize:'8px',   color:C.c4 })
+          );
+          fWrap.appendChild(box);
+        });
+        aWrap.appendChild(fWrap);
+      }
+
+      if (ai > 0) aWrap.style.display = 'none';
+      dictWrap.appendChild(aWrap);
+    });
+
+    // Sub-tab switching
+    function switchArea(key) {
+      activeArea = key;
+      AREAS.forEach(a => {
+        const on = a.key === key;
+        subBtns[a.key].style.color = on ? C.gold : C.c4;
+        subBtns[a.key].style.borderBottom = `1px solid ${on ? C.gold : 'transparent'}`;
+        areaConts[a.key].style.display = on ? 'block' : 'none';
+      });
+      inp.value = '';
+      filterRows('');
+    }
+    AREAS.forEach(a => subBtns[a.key].addEventListener('click', () => switchArea(a.key)));
+
+    // Live search
+    function filterRows(q) {
+      const ql = q.toLowerCase().trim();
+      areaConts[activeArea].querySelectorAll('tbody tr').forEach(tr => {
+        tr.style.display = !ql || tr.dataset.f.includes(ql) ? '' : 'none';
+      });
+    }
+    inp.addEventListener('input', e => filterRows(e.target.value));
+
+    ct.appendChild(dictWrap);
+
+    // ── SECCIÓN 3 — Data Lineage ───────────────────────────────
+    ct.appendChild(secTitle('03 · Conectividad', 'Matriz de Data Lineage'));
+
+    const lineage = [
+      { e:'dim_cliente_golden',            o:'CRM + KYC API',             i:'ELT batch (noche)',      c:'Scoring, Segmentación, Cobranza' },
+      { e:'dim_producto_credito',          o:'Motor originación',          i:'ELT batch (semanal)',    c:'Análisis de conversión, Pricing' },
+      { e:'fct_originacion_ventas',        o:'Motor originación + CRM',    i:'CDC streaming',          c:'Dashboard Adquisición, CAC, ROI' },
+      { e:'fct_cartera_snapshot_diario',   o:'Core crediticio + Cobranza', i:'Snapshot diario (D+1)',  c:'Mora, PCR, Provisiones, NIIF 9' },
+      { e:'fct_provisiones_niif9',         o:'Modelo ML + Reglas NIIF 9',  i:'Batch mensual (cierre)', c:'Comité de riesgo, Auditoría' },
+      { e:'fct_lineas_fondeo_utilizacion', o:'ALM + Tesorería',            i:'CDC streaming',          c:'Liquidez, Capital disponible, NIM' },
+    ];
+
+    const ltbl = document.createElement('table');
+    Object.assign(ltbl.style, { width:'100%', borderCollapse:'collapse', fontFamily:mono, fontSize:'10.5px', marginBottom:'20px' });
+    const lthead = document.createElement('thead');
+    const lthr  = document.createElement('tr');
+    ['Entidad Analítica','Sistema Origen','Mecanismo de Ingesta','Consumo Estratégico'].forEach(h => lthr.appendChild(thCell(h)));
+    lthead.appendChild(lthr);
+    ltbl.appendChild(lthead);
+
+    const ltbody = document.createElement('tbody');
+    lineage.forEach((row, ri) => {
+      const tr = document.createElement('tr');
+      tr.style.background = ri%2===0 ? 'transparent' : C.sf+'80';
+      const isDim = row.e.startsWith('dim_');
+      [row.e, row.o, row.i, row.c].forEach((val, ci) => {
+        const td = document.createElement('td');
+        td.textContent = val;
+        Object.assign(td.style, {
+          padding:'6px 10px', borderBottom:`1px solid ${C.bd}22`,
+          color: ci===0 ? (isDim?'#a78bfa':'#7b9fff') : ci===1 ? C.c3 : ci===2 ? C.gold+'cc' : C.c2,
+          fontSize: ci===2 ? '9.5px' : '10.5px',
+          fontWeight: ci===0 ? '500' : '400',
+          whiteSpace: ci===0 ? 'nowrap' : 'normal',
+        });
+        tr.appendChild(td);
+      });
+      ltbody.appendChild(tr);
+    });
+    ltbl.appendChild(ltbody);
+    ct.appendChild(ltbl);
+  }
+
+  // ══════════════════════════════════════════════════════════════
   // MAIN INIT — window.initNexusCreditDashboard(containerEl, opts)
   // ══════════════════════════════════════════════════════════════
   return async function initNexusCreditDashboard(containerEl, options = {}) {
@@ -859,9 +1241,9 @@ window.initNexusCreditDashboard = (function () {
     containerEl.appendChild(header);
 
     // ── TABS ───────────────────────────────────────────────────
-    const tabs = ['overview','adquisicion','cobranza','prediccion','marketing','tesoreria'];
-    const tl   = { overview:'Resumen ejecutivo', adquisicion:'Adquisición', cobranza:'Cobranza', prediccion:'Predicción', marketing:'Marketing', tesoreria:'Tesorería & Capital' };
-    const renderers = { overview:renderOverview, adquisicion:renderAdquisicion, cobranza:renderCobranza, prediccion:renderPrediccion, marketing:renderMarketing, tesoreria:renderTesoreria };
+    const tabs = ['overview','adquisicion','cobranza','prediccion','marketing','tesoreria','arquitectura_datos'];
+    const tl   = { overview:'Resumen ejecutivo', adquisicion:'Adquisición', cobranza:'Cobranza', prediccion:'Predicción', marketing:'Marketing', tesoreria:'Tesorería & Capital', arquitectura_datos:'Arquitectura de Datos' };
+    const renderers = { overview:renderOverview, adquisicion:renderAdquisicion, cobranza:renderCobranza, prediccion:renderPrediccion, marketing:renderMarketing, tesoreria:renderTesoreria, arquitectura_datos:renderArquitecturaDatos };
     let activeTab = 'overview';
 
     const tabBar = mk('div', { display:'flex', borderBottom:`1px solid ${C.bd}`, padding:'0 22px', background:C.sf, overflowX:'auto' });
